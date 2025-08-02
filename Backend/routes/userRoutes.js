@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/userController');
 const validate = require('../middleware/validateLibrarian');
 const {loginUser, registerUser} = require('../controllers/authController');
+const upload = require('../controllers/uploadController');
 
 //add an User
 router.post('/', controller.addUserController);
@@ -15,11 +16,9 @@ router.put('/:id', controller.updateUserController);
 //delete user by id
 router.delete('/:id', controller.deleteUserController);
 
+//upload-Image
+router.post('/:id/upload-profile', upload)
 
-//login user
-router.post('/:id/login', validate, loginUser)
-//register user
-router.post('/register', validate, registerUser)
 
 module.exports = router;
 

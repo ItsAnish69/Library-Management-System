@@ -22,7 +22,6 @@ const addBorrowController = async(req, res) =>{
     }
 };
 
-
 const getAllBorrowController = async(req, res) =>{
     try{
     const borrow = await BorrowController.getAllBorrow();

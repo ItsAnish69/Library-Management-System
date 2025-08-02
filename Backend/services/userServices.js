@@ -47,7 +47,6 @@ const deleteUser = async(id) =>{
     return delete_user;
 };
 
-
 module.exports = {
     createUser,
     existingEmail,
