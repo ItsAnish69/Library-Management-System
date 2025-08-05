@@ -44,11 +44,6 @@ const Register = () => {
   return (
     <>
           <div className="h-screen w-full flex">
-            {/* 1st section */}
-            <div className="w-[45%] bg-blue-300 hidden sm:flex justify-center items-center"
-            style={{ backgroundImage: `url(${backgroundPng})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-              <img src={LoginSvg} className="h-75" />
-            </div>
             <div className="w-full sm:w-[55%] flex justify-center items-center px-8 sm:px-20 py-24">
               {/* log in contain garne div */}
               <div className="h-full w-full flex flex-col justify-center items-center gap-12">
@@ -129,6 +124,12 @@ const Register = () => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* 1st section */}
+            <div className="w-[45%] hidden sm:flex justify-center items-center"
+            style={{ backgroundImage: `url(${backgroundPng})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <img src={LoginSvg} className="h-75" />
             </div>
           </div>
         </>

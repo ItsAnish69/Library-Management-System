@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/userController');
-const validate = require('../middleware/validateLibrarian');
-const {loginUser, registerUser} = require('../controllers/authController');
 const upload = require('../controllers/uploadController');
 
 //add an User

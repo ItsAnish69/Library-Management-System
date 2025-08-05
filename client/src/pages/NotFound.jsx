@@ -1,15 +1,25 @@
-import React from 'react'
 
 const NotFound = () => {
   return (
-    <div className=''>
-      <h1 className='text-5xl'>
-        The page you looking for doesnot exist
+    <div className='w-full h-screen flex flex-col justify-center items-center font-bold gap-5'>
+      <h1 className='text-4xl'>
+        The page you're looking for doesn't exist!
       </h1>
-      <p>
+      {/* make the button go back to the Login page */}
+      <div className="flex gap-5 ">
+      <button 
+        className='bg-[#F25D5D] text-white px-5 py-3 rounded-2xl hover:bg-[#000] transition-all duration-200'
+        onClick={() => window.location.href = '/'}>
         Go back to Login page
-      </p>
-    </div>
+      </button>
+
+      <button 
+        className='bg-[#F25D5D] text-white px-5 py-3 rounded-2xl hover:bg-[#000] transition-all duration-200'
+        onClick={() => window.location.href = '/register'}>
+        Go back to register page
+      </button>
+      </div>
+      </div>
   )
 }
 

@@ -2,7 +2,7 @@
 import ProfileSvg from "../../assets/svgs/profile.svg";
 import backgroundPng from "../../assets/svgs/background.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
   faGithub,
@@ -10,7 +10,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {useState} from 'react';
 import axios from "axios";
-
 
 
 
@@ -47,7 +46,7 @@ const Login = () => {
     <>
       <div className="h-screen w-full flex">
         {/* 1st section */}
-        <div className="w-[45%] hidden sm:flex justify-center p-20 felx flex-col items-center"
+        <div className="w-[45%] hidden sm:flex justify-center p-20 flex flex-col items-center sm:px-20 py-15"
          style={{ backgroundImage: `url(${backgroundPng})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <img src={ProfileSvg} className="h-80" />
           <div className="h-50 w-full text-center text-white" >
@@ -75,7 +74,7 @@ const Login = () => {
             >
               <div className="flex items-center gap-2">
                 {/* <RxAvatar size={40} /> */}
-                <FontAwesomeIcon icon={faUser} fontSize={25} />
+                <FontAwesomeIcon icon={faEnvelope} fontSize={25} />
                 <input
                   type="email"
                   placeholder="email"
