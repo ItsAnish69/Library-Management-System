@@ -7,7 +7,7 @@ const librarianOnly = require('../middleware/validateLibrarian');
 //register user
 router.post('/register', registerUser)
 //login user
-router.post('/:id/login', loginUser)
+router.post('/login', loginUser)
 
 //dashboard route for librarian only
 router.post('/dashboard', librarianOnly, (req, res) => {

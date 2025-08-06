@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 require("dotenv").config();
-
+const mail = require('../utils/mailer')
 
 
 //user register
@@ -29,14 +29,21 @@ const registerUser = async (req, res) => {
     });
     
     await user.save();
+    
+          await mail.sendEmail(
+            email,
+            "Welcome to the Library Management System",
+            `Hello ${name},\n\nThank you for registering as a ${role} in our Library Management System.\n\nHere is your password: ${password} for further login to LHMS.\n\nBest regards,\nLibrary Team`
+        );
+
     res.status(200).json({
-            message: "Registration Successfull",
-            user:{
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-    }})
+      message: "Registration Successfull",
+      user:{
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }})
 
   } catch (err) {
     res.status(500).json({ message: "Registration failed", error: err.message });

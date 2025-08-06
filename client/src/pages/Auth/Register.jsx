@@ -37,7 +37,7 @@ const Register = () => {
     //post the user data in the backend
     const handleSubmit = async(e) =>{
       e.preventDefault()
-      const reponse = await axios.post('http://localhost:3000/api/user/register', userData);
+      const reponse = await axios.post('http://localhost:5000/api/auth/register', userData);
     }
 
 

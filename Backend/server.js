@@ -2,17 +2,17 @@ const express = require("express");
 const mongoose = require("mongoose")
 require('dotenv').config();
 require("jsonwebtoken")
+const cors = require('cors')
 const app = express();
 
 app.use(express.json());
 
+app.use(cors());
+
+
 mongoose.connect("mongodb://localhost:27017/test")
-.then(() => {
-    console.log("Connected to the mongoDB")
-})
-.catch((err) => {
-    console.log(err);
-});
+.then(() => {console.log("Connected to the mongoDB")})
+.catch((err) => {console.log(err);});
 
 const BookRoutes = require('./routes/bookRoutes');
 const BorrowRoutes = require('./routes/borrowRoutes');

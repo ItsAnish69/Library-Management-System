@@ -35,10 +35,18 @@ const Login = () => {
     //post the user data in the backend
     const handleSubmit = async(e) =>{
       e.preventDefault()
-      const reponse = await axios.post('http://localhost:3000/api/user/login', userData);
+     if(!userData.email || !userData.password){
+      return alert("Please enter the credentials")
+     }
+     try{
+      const reponse = await axios.post('http://localhost:5000/api/auth/login', userData);
       const token = reponse.token;
       localStorage.getItem("token", token)
-      alert("Login successfull")
+      alert("Login Successfull")
+      window.location.href = '/home'
+     } catch(err){
+      alert('Login Failed. Please try again');
+     }
     }
 
 
@@ -80,6 +88,7 @@ const Login = () => {
                   placeholder="email"
                   name="email"
                   onChange={handleChange}
+                  required
                   className="bg-[#EAE9E9] rounded-2xl w-full p-4"
                 />
               </div>
@@ -92,11 +101,13 @@ const Login = () => {
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
+                  required
                   className="bg-[#EAE9E9] rounded-2xl w-full p-4"
                 />
               </div>
 
-              <button className="font-bold p-4 ml-9 rounded-2xl text-white cursor-pointer bg-[#F25D5D] hover:bg-[#000] transition-all duration-200">
+              <button className="font-bold p-4 ml-9 rounded-2xl text-white cursor-pointer bg-[#F25D5D] hover:bg-[#000] transition-all duration-200"
+              onClick={handleSubmit}>
                 Log In
               </button>
             </form>
