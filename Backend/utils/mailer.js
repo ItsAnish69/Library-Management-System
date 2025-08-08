@@ -23,6 +23,24 @@ const sendEmail = async (to, subject, text) => {
     }
     }
 
+    const sendOtp = async (to, subject, text) => {
+        const otpOption = {
+        from: process.env.EMAIL_USER,
+        to,
+        subject,
+        text
+    };
+
+    try{
+        await transporter.sendMail(otpOption);
+        console.log("Opt sent succesfully");
+    } catch(error){
+        console.error('Error sending email:', error);
+        throw error;
+    }
+}
+
 module.exports = {
-    sendEmail
+    sendEmail,
+    sendOtp
 };

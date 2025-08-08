@@ -1,16 +1,10 @@
 //rafce
 import ProfileSvg from "../../assets/svgs/profile.svg";
-import backgroundPng from "../../assets/svgs/background.png";
+import backgroundPng from "../../assets/images/background.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faEnvelope} from "@fortawesome/free-solid-svg-icons";
-import {
-  faFacebook,
-  faGithub,
-  faXTwitter,
-} from "@fortawesome/free-brands-svg-icons";
 import {useState} from 'react';
 import axios from "axios";
-
 
 
 const Login = () => {
@@ -36,7 +30,7 @@ const Login = () => {
     const handleSubmit = async(e) =>{
       e.preventDefault()
      if(!userData.email || !userData.password){
-      return alert("Please enter the credentials")
+      return alert("Please, fill all the input fields")
      }
      try{
       const reponse = await axios.post('http://localhost:5000/api/auth/login', userData);
@@ -49,7 +43,6 @@ const Login = () => {
      }
     }
 
-
   return (
     <>
       <div className="h-screen w-full flex">
@@ -58,8 +51,8 @@ const Login = () => {
          style={{ backgroundImage: `url(${backgroundPng})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <img src={ProfileSvg} className="h-80" />
           <div className="h-50 w-full text-center text-white" >
-          <h1 className="text-3xl font-bold mt-5">Hello, User!</h1>
-          <p className="text-xl mt-5">Welcome back! Log in to continue exploring, manage your account, and pick up right where you left off with your favorite books.</p>
+          <h1 className="text-3xl font-bold mt-5 sm:text-2xl">Hello, User!</h1>
+          <p className="text-xl mt-5 lg:text-lg sm:text-base">Welcome back! Log in to continue exploring, manage your account, and pick up right where you left off with your favorite books.</p>
           </div>
         </div>
 
@@ -106,36 +99,15 @@ const Login = () => {
                 />
               </div>
 
-              <button className="font-bold p-4 ml-9 rounded-2xl text-white cursor-pointer bg-[#F25D5D] hover:bg-[#000] transition-all duration-200"
+              <button className="font-bold p-4 ml-9 rounded-2xl mb-20 text-white cursor-pointer bg-[#F25D5D] hover:bg-[#000] transition-all duration-200"
               onClick={handleSubmit}>
                 Log In
               </button>
             </form>
 
-            {/* sign up with */}
-            <div className="text-center border-gray-300 p-2 ml-5 rounded-2xl w-full sm:w-96">
-              <p>Or sign up with</p>
-              <div className="flex gap-2 justify-center mt-2">
-                <FontAwesomeIcon
-                  icon={faFacebook}
-                  fontSize={26}
-                  className="cursor-pointer hover:text-[#2750D3] transition-colors"
-                />
-                <FontAwesomeIcon
-                  icon={faGithub}
-                  fontSize={26}
-                  className="cursor-pointer hover:text-[#2750D3] transition-colors"
-                />
-                <FontAwesomeIcon
-                  icon={faXTwitter}
-                  fontSize={26}
-                  className="cursor-pointer hover:text-[#2750D3] transition-colors"
-                />
-              </div>
             </div>
           </div>
         </div>
-      </div>
     </>
   )
 }

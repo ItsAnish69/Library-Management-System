@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 require("dotenv").config();
 const mail = require('../utils/mailer')
+const crypto = require('crypto');
 
 
 //user register
@@ -33,7 +34,8 @@ const registerUser = async (req, res) => {
           await mail.sendEmail(
             email,
             "Welcome to the Library Management System",
-            `Hello ${name},\n\nThank you for registering as a ${role} in our Library Management System.\n\nHere is your password: ${password} for further login to LHMS.\n\nBest regards,\nLibrary Team`
+            `Hello ${name},\n\nThank you for registering as a ${role} in our Library Management System.
+            \n\nHere is your password: ${password} \nFor further login to our Library Management System.\nPlease Kindly use the provided password\n\nBest regards,\nLibrary Team`
         );
 
     res.status(200).json({
@@ -91,7 +93,36 @@ const loginUser = async(req, res) =>{
     }
 }
 
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    if (!email) return res.status(400).json("Missing field! Please, enter the email");
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) return res.status(400).json("Email not found");
+
+        // Generate a random OTP or token
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        // Optionally, you can save the OTP and expiry to the user document
+        user.resetPasswordOtp = otp;
+        user.resetPasswordOtpExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
+        await user.save();
+
+        // Send OTP via email
+        await mail.sendOtp(
+            email,
+            "OTP for the forgot-Password",
+            `Your password reset OTP is: ${otp}. It is valid for 15 minutes.`
+        );
+
+        res.status(200).json({ message: "OTP sent to your email address" });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to send OTP", error: err.message });
+    }
+};
+
 module.exports = {
     loginUser,
-    registerUser
+    registerUser,
+    forgotPassword
 };

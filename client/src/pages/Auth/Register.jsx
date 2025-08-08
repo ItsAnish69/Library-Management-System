@@ -1,17 +1,10 @@
 import React from 'react'
 import LoginSvg from "../../assets/svgs/login.svg";
-import backgroundPng from "../../assets/svgs/background.png";
+import backgroundPng from "../../assets/images/background.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser, faUserTag, faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import {
-  faFacebook,
-  faGithub,
-  faXTwitter,
-} from "@fortawesome/free-brands-svg-icons";
-
 import {useState} from 'react';
 import axios from "axios";
-
 
 
 const Register = () => {
@@ -37,9 +30,18 @@ const Register = () => {
     //post the user data in the backend
     const handleSubmit = async(e) =>{
       e.preventDefault()
+      if(!userData.name || !userData.email || !userData.password){
+        return alert("Please, fill all the input fields")
+      }
+      try{
       const reponse = await axios.post('http://localhost:5000/api/auth/register', userData);
+      const token = reponse.token;
+      localStorage.getItem("token", token)
+      alert("Registration Successfull")
+    } catch(err){
+      alert("Registration Failed")
     }
-
+  }
 
   return (
     <>
@@ -69,6 +71,7 @@ const Register = () => {
                       placeholder="Username"
                       name='name'
                       onChange={handleChange}
+                      required
                       className="bg-[#EAE9E9] rounded-2xl w-full p-4"
                     />
                   </div>
@@ -81,6 +84,7 @@ const Register = () => {
                       placeholder="email"
                       name='email'
                       onChange={handleChange}
+                      required
                       className="bg-[#EAE9E9] rounded-2xl w-full p-4"
                     />
                   </div>
@@ -93,47 +97,37 @@ const Register = () => {
                       placeholder="Password"
                       name='password'
                       onChange={handleChange}
+                      required
                       className="bg-[#EAE9E9] rounded-2xl w-full p-4"
                     />
                   </div>
     
-                  <button className="font-bold ml-9 p-4 rounded-2xl text-white cursor-pointer bg-[#F25D5D] hover:bg-[#000] transition-all duration-200">
+                  <button className="font-bold ml-9 p-4 rounded-2xl text-white cursor-pointer bg-[#F25D5D] hover:bg-[#000] transition-all duration-200"
+                  onClick={handleSubmit}>
                     Register
                   </button>
                 </form>
     
-                {/* sign up with */}
-                <div className="text-center border-gray-300 p-2 ml-5 rounded-2xl w-full sm:w-96">
-                  <p>Or Login with</p>
-                  <div className="flex gap-2 justify-center mt-2">
-                    <FontAwesomeIcon
-                      icon={faFacebook}
-                      fontSize={26}
-                      className="cursor-pointer hover:text-[#2750D3] transition-colors"
-                    />
-                    <FontAwesomeIcon
-                      icon={faGithub}
-                      fontSize={26}
-                      className="cursor-pointer hover:text-[#2750D3] transition-colors"
-                    />
-                    <FontAwesomeIcon
-                      icon={faXTwitter}
-                      fontSize={26}
-                      className="cursor-pointer hover:text-[#2750D3] transition-colors"
-                    />
-                  </div>
+                {/* Already Registered*/}
+                <div className="text-center border-gray-300 p-2 ml-5 rounded-2xl w-full sm:w-96 flex justify-center items-center">
+                  <p>Already Registered?</p>
+                  <p className='pl-3 text-blue-600 cursor-pointer underline hover:text-blue-800' 
+                  onClick={() => window.location.href ='/login'}>Login Now</p>
                 </div>
               </div>
             </div>
 
             {/* 1st section */}
-            <div className="w-[45%] hidden sm:flex justify-center items-center"
+            <div className="w-[45%] hidden sm:flex justify-center items-center flex flex-col"
             style={{ backgroundImage: `url(${backgroundPng})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
               <img src={LoginSvg} className="h-75" />
+              <div className="h-50 w-full text-center text-white" >
+          <h1 className="text-3xl font-bold mt-5 sm:text-2xl">Hello, User!</h1>
+          <p className="text-xl mt-5 lg:text-lg sm:text-base w-100 ml-30">Welcome back! Log in to continue exploring, manage your account, and pick up right where you left off with your favorite books.</p>
+          </div>
             </div>
           </div>
         </>
-  )
-}
+  )}
 
 export default Register

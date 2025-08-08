@@ -9,7 +9,7 @@ const NotFound = () => {
       <div className="flex gap-5 ">
       <button 
         className='bg-[#F25D5D] text-white px-5 py-3 rounded-2xl hover:bg-[#000] transition-all duration-200'
-        onClick={() => window.location.href = '/'}>
+        onClick={() => window.location.href = '/login'}>
         Go back to Login page
       </button>
 
@@ -17,6 +17,12 @@ const NotFound = () => {
         className='bg-[#F25D5D] text-white px-5 py-3 rounded-2xl hover:bg-[#000] transition-all duration-200'
         onClick={() => window.location.href = '/register'}>
         Go back to register page
+      </button>
+
+       <button 
+        className='bg-[#F25D5D] text-white px-5 py-3 rounded-2xl hover:bg-[#000] transition-all duration-200'
+        onClick={() => window.location.href = '/home'}>
+        Go back to Preview page
       </button>
       </div>
       </div>

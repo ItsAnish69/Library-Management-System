@@ -1,5 +1,5 @@
 import React from "react"
-import backgroundPng from "../../assets/svgs/background.png";
+import backgroundPng from "../../assets/images/background.png";
 import Image1 from '../../assets/images/img1.jpg'
 import Image2 from '../../assets/images/img2.jpg'
 import Image3 from '../../assets/images/img3.jpg'
@@ -19,7 +19,7 @@ const Home = () => {
                         <li className="cursor-pointer hover:text-[#F25D5D]">About Us</li>
                     </ul>
                     <div className="flex gap-3 sm:gap-5 text-white font-bold mt-3 sm:mt-0">
-                        <button className="bg-[#F25D5D] hover:bg-[#000] transition-all duration-200 px-4 py-2 rounded-lg" onClick={() => window.location.href = '/'}>Log In</button>
+                        <button className="bg-[#F25D5D] hover:bg-[#000] transition-all duration-200 px-4 py-2 rounded-lg" onClick={() => window.location.href = '/login'}>Log In</button>
                         <button className="bg-[#F25D5D] hover:bg-[#000] transition-all duration-200 px-4 py-2 rounded-lg" onClick={() => window.location.href = '/register'}>Sign Up</button>
                     </div>
                 </nav>
