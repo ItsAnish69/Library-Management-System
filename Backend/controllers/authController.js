@@ -30,12 +30,13 @@ const registerUser = async (req, res) => {
     });
     
     await user.save();
-    
-          await mail.sendEmail(
-            email,
-            "Welcome to the Library Management System",
-            `Hello ${name},\n\nThank you for registering as a ${role} in our Library Management System.
-            \n\nHere is your password: ${password} \nFor further login to our Library Management System.\nPlease Kindly use the provided password\n\nBest regards,\nLibrary Team`
+
+    //send the email to the new user registration
+    await mail.sendEmail(
+      email,
+      "Welcome to the Library Management System",
+      `Hello ${name},\n\nThank you for registering as a ${role} in our Library Management System.
+      \n\nHere is your password: ${password} \nFor further login to our Library Management System.\nPlease Kindly use the provided password\n\nBest regards,\nLibrary Team`
         );
 
     res.status(200).json({
@@ -103,7 +104,8 @@ const forgotPassword = async (req, res) => {
 
         // Generate a random OTP or token
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        // Optionally, you can save the OTP and expiry to the user document
+        
+        //save the otp in the new field in user document
         user.resetPasswordOtp = otp;
         user.resetPasswordOtpExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
         await user.save();
@@ -121,8 +123,53 @@ const forgotPassword = async (req, res) => {
     }
 };
 
+    const otpVerify = async(req, res) => {
+        //extract the otp from the http request
+        const { email, otp } = req.body;
+        if(!email || !otp) return res.status(400).json('Missing field! email and OTP is required.')
+
+    try{
+        const user = await User.findOne({
+            email,
+            resetPasswordOtp: otp, 
+            resetPasswordOtpExpires: { $gt: Date.now() }
+        });
+
+        if(!user){ 
+            return res.status(400).json("Invalid OTP");}
+
+        //if otp is valid and not expired
+        user.resetPasswordOtp = undefined;
+        user.resetPasswordOtpExpires = undefined;
+        await user.save();
+
+        res.status(200).json('OTP verification successfull');
+    } catch (err) {
+        res.status(500).json({ message: "OTP verification failed", error: err.message });
+    }
+}
+
+    const changePassword = async(req, res) =>{
+        const {newPassword, otp} = req.body;
+        if(!newPassword) return res.status(400).json('Missing fields! New password is required');
+
+        try{
+        const user = await User.findOne({resetPasswordOtp: otp});
+        if(!user) return res.status(400).json("Invalid user")
+
+            user.password = await bcrypt.hash(newPassword, 10);
+            await user.save();
+            res.status(200).json("Password changed successfully");
+        } catch (err) {
+            res.status(500).json({ message: "Password change failed", error: err.message });
+        }
+    }
+
+
 module.exports = {
     loginUser,
     registerUser,
-    forgotPassword
+    forgotPassword,
+    otpVerify,
+    changePassword
 };
